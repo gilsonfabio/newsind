@@ -62,7 +62,7 @@ export default function SidebarLayout({
     { name: "Vdas Vencimento", to: "/dashboard/vdavencimento", icon: FileText },
     { name: "Extrato Admin", to: "/dashboard/extadmin", icon: FileText },
     { name: "Compras Servidor", to: "/cmpservidor", icon: FileText },
-    { name: "Vdas Org.Admin", to: "/vdaOrgao", icon: FileText },
+    { name: "Vdas Org.Admin", to: "/dashboard/vdavctorgao", icon: FileText },
     { name: "Atualiza Tabelas", to: "/atuTabelas", icon: FileText },
   ];
 

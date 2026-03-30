@@ -56,12 +56,12 @@ export default function PdfExtratoAdmPage() {
 
   // ---------------- GERA PDF AUTOMATICAMENTE ----------------
 
-  useEffect(() => {
-    if (vendas.length === 0) return;
-
-    gerarPdf();
-  }, [vendas]);
-
+  //useEffect(() => {
+  //  if (vendas.length === 0) return;
+  //
+  //  gerarPdf();
+  //}, [vendas]);
+  //
   // ---------------- TOTAIS ----------------
 
   const totCompras = vendas.reduce((s, v) => s + v.tcnvVlrTotal, 0);
