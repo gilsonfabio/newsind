@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "http://newsind.vercel.app:3333"
+    baseURL: "https://backcaldascard.vercel.app/"
     //baseURL: "https://backdelivery.vercel.app/" 
 })
 
