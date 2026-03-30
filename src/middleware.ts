@@ -1,10 +1,10 @@
-import NextAuth from "next-auth";
+import { withAuth } from "next-auth/middleware";
 
-const { auth: middleware } = NextAuth({
-  providers: [],
+export default withAuth({
+  pages: {
+    signIn: "/login",
+  },
 });
-
-export { middleware };
 
 export const config = {
   matcher: ["/dashboard/:path*"],
