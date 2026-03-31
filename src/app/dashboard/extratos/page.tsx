@@ -182,6 +182,21 @@ export default function ComprasPage() {
 
             <Link
                 href={{
+                    pathname: "/dashboard/extratos/arqcmpcsv",
+                    query: {
+                        datVencto,
+                        orgao,
+                        regStatus,
+                    },
+                }}
+            >
+                <Button className="flex gap-2">
+                    <FileText size={16} />
+                        Arquivo CSV
+                </Button>
+            </Link>
+            <Link
+                href={{
                     pathname: "/dashboard/extratos/arqcmptxt",
                     query: {
                         datVencto,

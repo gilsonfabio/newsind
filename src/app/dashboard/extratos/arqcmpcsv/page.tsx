@@ -15,10 +15,11 @@ import {
 
 import { FileText, FileDown } from "lucide-react";
 
+import { CSVLink } from "react-csv";
+
 // ---------------- TYPES ----------------
 
 type Venda = {
-  usrId: number;
   usrMatricula: string;
   usrNome: string;
   usrVlrUsado: number;
@@ -26,7 +27,7 @@ type Venda = {
 
 // ---------------- PAGE ----------------
 
-export default function ArqCmpTxtPage() {
+export default function ArqCmpCsvPage() {
   const searchParams = useSearchParams();
 
   const [vendas, setVendas] = useState<Venda[]>([]);
@@ -34,6 +35,14 @@ export default function ArqCmpTxtPage() {
   const [datVencto, setDatVencto] = useState("");
   const [orgao, setOrgao] = useState("");
   const [status, setStatus] = useState("");
+
+  // ---------------- CSV HEADERS ----------------
+
+  const headers = [
+    { label: "Matricula", key: "usrMatricula" },
+    { label: "Nome Servidor", key: "usrNome" },
+    { label: "Valor Total", key: "usrVlrUsado" },
+  ];
 
   // ---------------- LOAD DATA ----------------
 
@@ -53,10 +62,8 @@ export default function ArqCmpTxtPage() {
         const res = await api.get(`/downloadTxt/${dat}/${org}/${st}`);
         setVendas(res.data);
 
-        let idOrg = org;
-        const orgResp = await api.get(`/searchOrg/${idOrg}`);
-        const descricao = orgResp.data?.[0]?.orgDescricao || "";
-        setOrgDescricao(descricao);
+        const orgResp = await api.get(`/searchOrg/${org}`);
+        setOrgDescricao(orgResp.data.orgDescricao);
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       }
@@ -65,67 +72,9 @@ export default function ArqCmpTxtPage() {
     loadData();
   }, [searchParams]);
 
-  // ---------------- GERAR TXT ----------------
+  // ---------------- FILE NAME ----------------
 
-    const gerarTXT = () => {
-      let texto = "";
-
-      const col = (v: string | number, t: number) =>
-        String(v ?? "").padEnd(t, " ");
-
-      const colValor = (v: number, t: number) =>
-        v.toLocaleString("pt-BR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-        .padStart(t, " ");
-
-      texto += "RELATÓRIO DE VENDAS POR VENCIMENTO\n";
-      texto += `Vencimento: ${datVencto}   Órgão: ${orgao} - ${orgDescricao}\n\n`;
-
-      texto +=
-        col("ID", 5) +
-        col("MATRICULA", 10) +
-        col("NOME DO SERVIDOR", 34) +
-        col("VENCIMENTO", 11) +
-        col("TOTAL", 13) +
-        "\n";
-
-      texto += "-".repeat(73) + "\n";
-
-      const vendasOrdenadas = [...vendas].sort((a, b) =>
-        a.usrNome.localeCompare(b.usrNome, "pt-BR", { sensitivity: "base" })
-      );
-
-      let total = 0;
-
-      vendasOrdenadas.forEach((v) => {
-        total += Number(v.usrVlrUsado ?? 0);
-
-        texto +=
-          col(v.usrId, 5) +
-          col(v.usrMatricula, 10) +
-          col(v.usrNome, 34) +
-          col(datVencto, 11) +
-          "R$ " +
-          colValor(v.usrVlrUsado ?? 0, 10) +
-          "\n";
-        });
-
-        texto += "-".repeat(73) + "\n";
-
-        texto += col("TOTAL GERAL:", 60) + "R$ " + colValor(total, 10) + "\n";
-
-        const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `Relatorio_${orgDescricao}_${datVencto}.txt`;
-      link.click();
-
-      URL.revokeObjectURL(url);
-  };
+  const nomeArquivo = `Relatorio_${orgDescricao}_${datVencto}.csv`;
 
   // ---------------- UI ----------------
 
@@ -134,7 +83,7 @@ export default function ArqCmpTxtPage() {
       <Card className="w-full max-w-4xl rounded-2xl shadow-sm">
         <CardHeader>
           <CardTitle className="text-xl font-semibold">
-            Relatório de Compras (TXT / CSV / PDF)
+            Relatório de Compras (TXT / CSV)
           </CardTitle>
         </CardHeader>
 
@@ -150,10 +99,15 @@ export default function ArqCmpTxtPage() {
               </a>
             </Button>
 
-            <Button onClick={gerarTXT}>
+            <CSVLink
+              data={vendas}
+              headers={headers}
+              filename={nomeArquivo}
+              className="inline-flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
+            >
               <FileDown size={16} />
-              Exportar TXT
-            </Button>
+              Exportar CSV
+            </CSVLink>
           </div>
 
           {/* TABELA */}
@@ -161,7 +115,6 @@ export default function ArqCmpTxtPage() {
             <table className="w-full text-sm">
               <thead className="bg-zinc-100">
                 <tr>
-                  <th className="p-3 text-left">ID</th>
                   <th className="p-3 text-left">Matrícula</th>
                   <th className="p-3 text-left">Servidor</th>
                   <th className="p-3 text-right">Total Compras</th>
@@ -174,7 +127,6 @@ export default function ArqCmpTxtPage() {
                     key={index}
                     className="border-t hover:bg-zinc-50 transition"
                   >
-                    <td className="p-3">{row.usrId}</td>
                     <td className="p-3">{row.usrMatricula}</td>
                     <td className="p-3">{row.usrNome}</td>
                     <td className="p-3 text-right">
