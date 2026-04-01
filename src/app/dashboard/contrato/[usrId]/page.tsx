@@ -108,8 +108,74 @@ export default function PdfCnvContrato() {
           ": A Associação poderá conferir ao CONTRATANTE um crédito de até 30% (trinta por cento) do salário-liquido, aferido pelo último demonstrativo de pagamento salarial,",
           "no sistema parcelado e em caso de comprometimento deste percentual, poderá por analise da administradora, conceder mais 15% (quinze por cento) no sistema rotativo",
           "(uma vez) para compra exclusiva de alimentos, remédios e itens de primeira necessidade, conforme regras do estatuto sindical.\n\n",
-          { text: "Parágrafo 2º", fontSize: 10, bold: true },
-          ": O CONTRATANTE (servidor público) autoriza o desconto em folha de pagamento...",
+          {text: 'Parágrafo 2º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público) autoriza o desconto em folha de pagamento, dos valores gastos mensalmente com o Cartão, a serem realizados no mês imediatamente ',
+                    'posterior às compras e em caso de exoneração, ', 
+                    {text: 'aposentadoria ou desligamento por qualquer motivo, autoriza até 100% (cem por cento) o valor em sua rescisão contratual para a garantia dos valores restantes. \n\n', fontSize: 10, bold: true},
+                    {text: 'Assinatura: ____________________________________________________________________________________________________\n\n', fontSize: 10, bold: true},
+                    {text: 'Parágrafo 3º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público) se obriga a manter seus dados atualizados, além de informar imediatamente, por escrito a perda do cartão, solicitando seu bloqueio,',
+                    'além de se responsabilizar quanto ao uso correto da senha e o uso do cartão respeitando sempre as regras aqui pactuadas.\n\n',
+                    {text: 'Parágrafo 4º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público), não poderá emprestar seu cartão a terceiros, simular compras sob pena de exclusão do uso do cartão.\n\n',
+                    {text: 'Parágrafo 5º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público), caso não reconheça qualquer compra, deverá se diligenciar até o estabelecimento com o intuito de ',
+                    'identificação, entregando contestação ao comercio/serviço e a administradora do cartão. \n\n',  
+                    {text: 'Parágrafo 6º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público) pagará R$ 10,00(dez reais) por cada via do cartão e em caso de extravio a despesas com bloqueios e ',
+                    'a confecção de novos cartões ficará a cargo deste. \n\n',
+                    {text: 'Parágrafo 7º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público) em caso de mudança de matrícula funcional, por qualquer motivo, já autoriza a transferência automática dos débitos em sua folha de pagamento.\n\n', 
+                    {text: 'Assinatura: ____________________________________________________________________________________________________\n\n', fontSize: 10, bold: true},
+                    {text: 'Parágrafo 8º', fontSize: 10, bold: true},
+                    ': O CONTRATANTE (servidor público) em caso de não realização de débito em folha por qualquer motivo, faculta-se a dirigir junto a administradora e realizar o pagamento,',
+                    'ou autoriza a cobrança em duplicidade para compensação dos valores.\n\n',   
+                    {text: 'Assinatura: ____________________________________________________________________________________________________\n\n', fontSize: 10, bold: true},
+                    {text: 'Cláusula segunda – ', fontSize: 10, bold: true},
+                    'O presente contrato tem seu termo inicial de vigência a partir de sua assinatura por tempo indeterminado ou até a data do último dia do mês de trabalho, ',
+                    'em caso de exoneração do cargo exercido pelo servidor e ou descumprimento contratual.\n\n',
+                    {text: 'Cláusula terceira – ', fontSize: 10, bold: true},
+                    'O presente contrato pode ser rescindido por interesse de qualquer das partes, mediante comunicação escrita, devidamente fundamentada, realizada em período não ',
+                    'inferior a 30 (trinta) dias, mantendo os descontos em folha até sua quitação. \n\n',
+                    {text: 'Parágrafo único ', fontSize: 10, bold: true},
+                    'Sem prejuízo do caput dessa cláusula, o presente instrumento pode ser ainda rescindido de imediato, mediante simples comunicação do CONTRATADO, entregue com comprovação ',
+                    'de recebimento, em caso de inadimplência no cumprimento das obrigações pecuniárias assumidas pelo CONTRATANTE, caso em que constatando-se culpa do mesmo, responderá ele, ',
+                    'CONTRATANTE, pelas perdas e danos decorrentes da rescisão.\n\n',   
+                    {text: 'Cláusula quarta – ', fontSize: 10, bold: true},
+                    'A responsabilidade tanto do CONTRATADO como do CONTRATANTE é limitada ao descrito nas cláusulas deste contrato. \n\n',
+                    {text: 'Cláusula quinta – ', fontSize: 10, bold: true},
+                    'O CONTRATADO não pode transferir todo ou parcialmente o presente instrumento, sem prévio e expresso consentimento da CONTRATANTE. \n\n',
+                    {text: 'Cláusula sexta – ', fontSize: 10, bold: true},
+                    'As partes acordam que facultará ao CONTRATADO, o direito de realizar a cobrança dos valores devidos e não passíveis de desconto por advento da rescisão do contrato de ',
+                    'trabalho em até 100%, através de todos os meios admitidos em direito, obrigando a CONTRATANTE, seus herdeiros e sucessores em caso de saldo insuficiente em sua rescisão.\n\n',
+                    {text: 'Parágrafo único', fontSize: 10, bold: true},
+                    'Caso haja morte ou incapacidade civil do CONTRATADO, seus sucessores ou representante legal arcarão com os valores devidos na proporção do espólio deixado pelo de cujus.\n\n',
+                    {text: 'Cláusula sétima – ', fontSize: 10, bold: true},
+                    'O CONTRATANTE reconhece que o cargo em comissão/contrato em que ocupa é de exoneração ad nutum, e que pode ser dispensado a qualquer tempo, por ato próprio do Chefe do ',
+                    'Poder Executivo, bem como, em caso de contrato de prestador de serviços, reconhece que o mesmo também pode ser rescindido a qualquer tempo por conveniência e oportunidade da ',
+                    'Administração, razão pela qual se compromete, em caso de exoneração ou rescisão contratual, a efetuar os pagamentos de todos os valores devidos a  ASSOCIAÇÃO por advento do',
+                    ' uso do CARTÃO CALDASCAR, que por qualquer motivo não puderem ser descontados do instrumento de rescisão, sendo que estes casos a concessão de crédito e parcelas ficara exclusivamente ',
+                    'a critério da administradora.\n\n',
+                    {text: 'Parágrafo único ', fontSize: 10, bold: true},
+                    'O CONTRATANTE reconhece e concorda que fica facultado a administradora, em caso do não pagamento previsto neste contrato, fazer inscrever os dados cadastrais do CONTRATANTE em órgãos ',
+                    'de proteção ao crédito, especialmente SPC e SERASA e cartório, independente de qualquer ação judicial ou administrativa.\n\n',
+                    {text: 'Cláusula oitava – ', fontSize: 10, bold: true},
+                    'Fica estipulada uma multa de 10% (dez por cento), apurada sobre o valor efetivamente devido após a aplicação de atualização monetária (índice INPC/IBGE) juros de 2% ao mês, no caso do ',
+                    'não pagamento dos valores devidos após a celebração da rescisão de contrato, sem prejuízo da responsabilidade por perdas e danos, ressalvando-se os casos fortuitos e eventos de força ',
+                    'maior, além de honorários advocatícios de 10%.\n\n',
+                    {text: 'Cláusula nona – ', fontSize: 10, bold: true},
+                    'As partes dão ao presente instrumento o caráter de título executivo extrajudicial, nos termos do art. 585, inciso II, do Código de Processo Civil.\n\n',
+                    {text: 'Cláusula décima – ', fontSize: 10, bold: true},
+                    'Fica eleito o foro da Comarca de Caldas Novas/GO, para dirimirem as dúvidas provenientes da execução e cumprimento do mesmo, renunciando a qualquer outro',
+                    ', por mais especial que se apresente, sendo regido ainda pelo Código Civil e regras estatutárias, tendo em vista que o caráter é de associatividade sem fins lucrativos.\n\n',
+                    'E por estarem certos, justos e contratos, firmam o presente em duas vias de igual teor e forma, na presença de duas testemunhas que também assinam.\n\n',
+                    `Caldas Novas/GO, ${dia}   de ${mes}     de ${ano}          \n\n\n`,
+                    '______________________________________________________________________________\n', 
+                    `Contratante-servidor - ${servidor.usrNome}.\n\n`,
+                    '______________________________________________________________________________\n',
+                    'Rosimeire Pereira Martins – Diretora Financeira da Associação Cultural, Esportiva e Social dos Servidores Públicos Municipais de Caldas Novas.\n\n',                    
+                    '______________________________________________________________________________\n', 
+                    'Eurípedes Israel de Morais - Presidente do Sindicato dos Servidores Públicos Municipais de Caldas Novas-Sindicaldas.\n\n\n\n',
         ],
       },
       // Continue adicionando todas as cláusulas aqui seguindo o mesmo padrão...
@@ -122,30 +188,187 @@ export default function PdfCnvContrato() {
 
     // ========================== PARTE FINAL ==========================
     docDefinition.content.push(
-      { text: "Testemunha 1: _________________________________ CPF:______________________", fontSize: 10, margin: [0, 5, 0, 5] },
-      { text: "Testemunha 2: _________________________________ CPF:______________________", fontSize: 10, margin: [0, 5, 0, 20] },
-    );
+          { text: "Testemunha 1: _________________________________ CPF:______________________", fontSize: 10, margin: [0, 5, 0, 5] },
+          { text: "Testemunha 2: _________________________________ CPF:______________________", fontSize: 10, margin: [0, 5, 0, 20] },
+        );
 
-    // ========================== PARTE FINAL ==========================
-    
-    docDefinition.content.push(
-      // Forçar quebra de página antes da nota promissória
+        // ========================== PARTE FINAL ==========================
+        
+        function linha(margem = [0, 5, 0, 10]) {
+          return {
+            table: {
+              widths: ['*'],
+              body: [['']]
+            },
+            layout: {
+              hLineWidth: () => 1,
+              vLineWidth: () => 0
+            },
+            margin: margem
+          };
+        }
+
+        function linhaSimples() {
+          return {
+            table: {
+              widths: ['*'],
+              body: [['']]
+            },
+            layout: {
+              hLineWidth: () => 1,
+              vLineWidth: () => 0
+            }
+          };
+        }
+
+        //-------------------------------------------------------------------------
+
+        docDefinition.content.push(
       { text: '', pageBreak: 'before' },
 
-      // Nota promissória na segunda página
-      { text: "Vencimento: _________de ______________de ___________", fontSize: 12, bold: true, alignment: "right", margin: [0, 0, 0, 10] },
-      { text: "Nº _________________                                                                                                   R$:________________________", fontSize: 12, bold: true, margin: [0, 0, 0, 20] },
+      // Nº
+      {
+        text: 'Nº ____________________________',
+        fontSize: 12,
+        bold: true,
+        margin: [0, 0, 0, 10]
+      },
 
-      { text: "No dia _    _______ __________________________________________de____________________________________de", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "_____________________________ pagar ________ por esta única via de NOTA PROMISSÓRIA a Associação", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "Cultural,   Esportiva   e   Social   dos   Servidores   Públicos   Municipais  de  Caldas  Novas  CPF/CNPJ", fontSize: 10, alignment: "justify", margin: [0, 0, 0, 5] },
-      { text: "33.458.971/0001-39 ou à sua ordem, a quantia de _____________________________________________________", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "em moeda corrente deste país, pagável em ____________________________________________________________", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "Emitente:__________________________________________                       Data de Emissão: ______/______/_______", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "CPF/CNPJ:__________________________________Endereço:________________________________________________", fontSize: 10, margin: [0, 0, 0, 5] },
-      { text: "_______________________________________________________________________________________________________", fontSize: 10, margin: [0, 0, 0, 20] },
-      { text: "Ass.do emitente__________________________________________", fontSize: 10, alignment: "center", margin: [0, 0, 0, 5] }
-    );
+      // Vencimento + Valor
+      {
+        columns: [
+          { text: '', width: '*' },
+          {
+            width: 'auto',
+            stack: [
+              {
+                text: 'Vencimento: _________ de ______________ de ___________',
+                fontSize: 12,
+                bold: true,
+                alignment: 'right'
+              },
+              {
+                text: 'R$: __________________________',
+                fontSize: 12,
+                bold: true,
+                alignment: 'right',
+                margin: [0, 5, 0, 0]
+              }
+            ]
+          }
+        ],
+        margin: [0, 0, 0, 20]
+      },
+
+      // Texto principal
+      {
+        text: 'No dia ____ de __________________________ de ________, pagarei por esta única via de NOTA PROMISSÓRIA à Associação',
+        fontSize: 10,
+        margin: [0, 0, 0, 5]
+      },
+
+      {
+        text: 'Cultural, Esportiva e Social dos Servidores Públicos Municipais de Caldas Novas CPF/CNPJ 33.458.971/0001-39 ou à sua ordem, a quantia de',
+        fontSize: 10,
+        alignment: 'justify',
+        margin: [0, 0, 0, 5]
+      },
+
+      linha(), // linha valor por extenso
+
+      {
+        text: 'em moeda corrente deste país, pagável em',
+        fontSize: 10,
+        margin: [0, 0, 0, 5]
+      },
+
+      linha(), // linha local de pagamento
+
+      // Dados do emitente
+          {
+    columns: [
+      {
+        width: '65%',
+        table: {
+          widths: ['auto', '*'],
+          body: [
+            ['Emitente:', '']
+          ]
+        },
+        layout: {
+          hLineWidth: (i: number) => (i === 1 ? 1 : 0),
+          vLineWidth: () => 0
+        }
+      },
+
+      {
+        width: '35%',
+        table: {
+          widths: ['auto', '*'],
+          body: [
+            ['Data de Emissão:', '']
+          ]
+        },
+        layout: {
+          hLineWidth: (i: number) => (i === 1 ? 1 : 0),
+          vLineWidth: () => 0
+        }
+      }
+    ],
+    margin: [0, 10, 0, 10]
+  },
+
+  // CPF/CNPJ
+  {
+    table: {
+      widths: ['auto', '*'],
+      body: [
+        ['CPF/CNPJ:', '']
+      ]
+    },
+    layout: {
+      hLineWidth: (i: number) => (i === 1 ? 1 : 0),
+      vLineWidth: () => 0
+    },
+    margin: [0, 0, 0, 10]
+  },
+
+  // ENDEREÇO
+  {
+    table: {
+      widths: ['auto', '*'],
+      body: [
+        ['Endereço:', '']
+      ]
+    },
+    layout: {
+      hLineWidth: (i: number) => (i === 1 ? 1 : 0),
+      vLineWidth: () => 0
+    },
+    margin: [0, 0, 0, 30]
+  },
+
+  {
+    table: {
+      widths: ['*'],
+      body: [
+        ['']
+      ]
+    },
+    layout: {
+      hLineWidth: (i: number) => (i === 1 ? 1 : 0), 
+      vLineWidth: () => 0
+    },
+    margin: [80, 0, 80, 0]
+  },
+  // ASSINATURA (LINHA ÚNICA CENTRAL)
+  {
+    text: 'Ass. do emitente',
+    alignment: 'center',
+    margin: [0, 10, 0, 5]
+  }
+ 
+);
 
     pdfMake.createPdf(docDefinition).open();
   };
