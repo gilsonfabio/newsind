@@ -210,6 +210,21 @@ export default function ComprasPage() {
                         Arquivo TXT
                 </Button>
             </Link>
+            <Link
+                href={{
+                    pathname: "/dashboard/extratos/cmpvctpdf",
+                    query: {
+                        datVencto,
+                        orgao,
+                        regStatus,
+                    },
+                }}
+            >
+                <Button className="flex gap-2">
+                    <FileText size={16} />
+                        PDF sintético
+                </Button>
+            </Link>
           </div>
 
           {/* TOTAL */}
