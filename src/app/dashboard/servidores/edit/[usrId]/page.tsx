@@ -399,7 +399,7 @@ export default function EditServidorPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Cartão Servidor</Label>
-                      <Input placeholder="Cartão Servidor" value={form.usrCartao || ""} onChange={handleChange} />
+                      <Input placeholder="Cartão Servidor" value={form.usrCartao || ""} onChange={handleChange} disabled={!!form.usrCartao} />
                       <Button
                         type="button"
                         onClick={handleCartao}
