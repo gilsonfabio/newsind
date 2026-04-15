@@ -56,6 +56,11 @@ export default function NewServidorPage() {
   const [secretarias, setSecretarias] = useState<any[]>([]);
   const [cargos, setCargos] = useState<any[]>([]);
   const [bairros, setBairros] = useState<any[]>([]);
+  const [parametros, setParametros] = useState([]);
+  const [seqcartao, setSeqCartao] = useState('');
+
+  const $arr_alfa = ["1828","9283","2837","8374","3746","7465","4650","6502","5029","0291","2918","9183","1837","8374","3746","7465","4653","6539","5391","3918","9182","1827","8274","2745","7456","4568","5682","6821","8211","2191","1918", "2755"];
+  var nroCartao = '';
 
   // ---------------- LOAD DATA ----------------
   useEffect(() => {
@@ -70,6 +75,21 @@ export default function NewServidorPage() {
         setSecretarias(sec.data);
         setCargos(car.data);
         setBairros(bai.data);
+
+        api.get(`parametros`).then(response => {
+          setParametros(response.data);
+          setSeqCartao(response.data[0].parSeqCartao);
+
+          let newDate = new Date()
+          let $_dia = newDate.getDate();
+          let parInicial = '8321';
+          let parSecundary = $arr_alfa[$_dia];
+          let parFinal = parseInt(response.data[0].parSeqCartao);
+          let nroCartao = parInicial + parSecundary + parFinal;
+          setUsrCartao(nroCartao);
+          console.log(response.data[0].parSeqCartao);
+          console.log(nroCartao);
+        })
       } catch (error) {
         console.error("Erro ao carregar dados:", error);
       }
@@ -77,6 +97,7 @@ export default function NewServidorPage() {
 
     loadData();
   }, []);
+
 
   // ---------------- CREATE ----------------
   async function handleCreateServidor(e: React.FormEvent) {
@@ -312,8 +333,7 @@ export default function NewServidorPage() {
                   <h3 className="text-sm font-semibold text-gray-500 uppercase">
                     Acesso
                   </h3>
-
-                  <Input placeholder="Cartão Servidor" value={usrCartao} onChange={(e) => setUsrCartao(e.target.value)} />
+                  <Input placeholder="Cartão Servidor" value={usrCartao || ""} onChange={(e) => setUsrCartao(e.target.value)}/>
                   <Input type="password" placeholder="Senha" value={usrPassword} onChange={(e) => setUsrPassword(e.target.value)} />
                 </div>
 

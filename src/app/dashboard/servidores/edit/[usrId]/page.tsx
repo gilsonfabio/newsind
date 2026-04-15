@@ -133,6 +133,13 @@ export default function EditServidorPage() {
   const [cargos, setCargos] = useState<Cargo[]>([]);
   const [tipos, setTipos] = useState([]);
   const [bairros, setBairros] = useState<Bairro[]>([]);
+  const [parametros, setParametros] = useState([]);
+  const [seqcartao, setSeqCartao] = useState('');
+
+  const [usrCartao, setUsrCartao] = useState("");
+
+  const $arr_alfa = ["1828","9283","2837","8374","3746","7465","4650","6502","5029","0291","2918","9183","1837","8374","3746","7465","4653","6539","5391","3918","9182","1827","8274","2745","7456","4568","5682","6821","8211","2191","1918", "2755"];
+  var nroCartao = '';
 
   useEffect(() => {
     const id = params?.usrId;
@@ -167,6 +174,29 @@ export default function EditServidorPage() {
     });
   }
 
+  async function handleCartao() {
+    if (usrCartao) return;
+
+    api.get(`parametros`).then(response => {
+      setParametros(response.data);
+      setSeqCartao(response.data[0].parSeqCartao);
+
+      let newDate = new Date()
+      let $_dia = newDate.getDate();
+      let parInicial = '8321';
+      let parSecundary = $arr_alfa[$_dia];
+      let parFinal = parseInt(response.data[0].parSeqCartao);
+      let nroCartao = parInicial + parSecundary + parFinal;
+      setUsrCartao(nroCartao);
+      setForm((prev) => ({
+        ...prev,
+        usrCartao: nroCartao,
+      }));
+      console.log(response.data[0].parSeqCartao);
+      console.log(nroCartao);
+    })
+  }
+  
   return (
     <div className="p-6">
       <Card className="shadow-lg rounded-2xl">
@@ -369,7 +399,14 @@ export default function EditServidorPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Cartão Servidor</Label>
-                      <Input disabled value={form.usrCartao} />
+                      <Input placeholder="Cartão Servidor" value={form.usrCartao || ""} onChange={handleChange} />
+                      <Button
+                        type="button"
+                        onClick={handleCartao}
+                        disabled={!!form.usrCartao}
+                      >
+                        Gerar
+                      </Button>
                     </div>
                   </div>
 
