@@ -100,7 +100,7 @@ export default function CargosPage() {
           />
 
           {/* NOVO CARGO */}
-          <Link href="/dashboard/cargos/new">
+          <Link href="/dashboard/cargos/novo">
             <Button className="flex items-center gap-2">
               <Plus size={16} />
               Novo Cargo
