@@ -277,6 +277,7 @@ export default function NewServidorPage() {
                   <h3 className="text-sm font-semibold text-gray-500 uppercase">
                     Profissional
                   </h3>
+                  <Input placeholder="Trabalho" value={usrTrabalho} onChange={(e) => setUsrTrabalho(e.target.value)} />
 
                   <Input placeholder="Matrícula" value={usrMatricula} onChange={(e) => setUsrMatricula(e.target.value)} />
 

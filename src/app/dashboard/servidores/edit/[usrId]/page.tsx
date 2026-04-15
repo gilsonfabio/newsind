@@ -332,6 +332,10 @@ export default function EditServidorPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
+                      <Label>Trabalho</Label>
+                      <Input name="usrTrabalho" value={form.usrTrabalho} onChange={handleChange} />
+                    </div>
+                    <div>
                       <Label>Matrícula</Label>
                       <Input name="usrMatricula" value={form.usrMatricula} onChange={handleChange} />
                     </div>
