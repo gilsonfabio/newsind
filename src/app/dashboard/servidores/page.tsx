@@ -92,7 +92,7 @@ export default function ServidoresPage() {
       {/* BOTÕES DE AÇÃO */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <Link href="/dashboard/servidores/novo">
-          <Button className="flex items-center gap-2">
+          <Button className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white">
             <Plus size={16} />
             Novo Servidor
           </Button>

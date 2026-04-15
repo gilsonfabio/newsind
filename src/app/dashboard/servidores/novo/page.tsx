@@ -19,11 +19,18 @@ export default function NewServidorPage() {
   const [usrNome, setUsrNome] = useState("");
   const [usrEmail, setUsrEmail] = useState("");
   const [usrCpf, setUsrCpf] = useState("");
+  const [usrCartao, setUsrCartao] = useState("");
   const [usrCelular, setUsrCelular] = useState("");
   const [usrNascimento, setUsrNascimento] = useState("");
   const [usrIdentidade, setUsrIdentidade] = useState("");
   const [usrOrgEmissor, setUsrOrgEmissor] = useState("");
   const [usrEstCivil, setUsrEstCivil] = useState("");
+  const [usrTipCadastro, setUsrTipCadastro] = useState("");
+  const [usrPassword, setUsrPassword] = useState("");
+  const [usrConjuge, setUsrConjuge] = useState("");
+  const [usrNasConjuge, setUsrNasConjuge] = useState("");
+  const [usrPai, setUsrPai] = useState("");
+  const [usrMae, setUsrMae] = useState("");
 
   // ---------------- ADDRESS ----------------
   const [usrEndereco, setUsrEndereco] = useState("");
@@ -38,6 +45,12 @@ export default function NewServidorPage() {
   const [usrCargo, setUsrCargo] = useState("");
   const [usrAdmissao, setUsrAdmissao] = useState("");
   const [usrSalLiquido, setUsrSalLiquido] = useState("");
+  const [usrSalBruto, setUsrSalBruto] = useState("");
+  const [usrSalBase, setUsrSalBase] = useState("");
+  const [usrFonResid, setUsrFonResid] = useState("");
+  const [usrTrabalho, setUsrTrabalho] = useState("");
+  const [usrTipContrato, setUsrTipContrato] = useState("");
+  const [usrFonTrabalho, setUsrFonTrabalho] = useState("");
 
   // ---------------- DATA LISTS ----------------
   const [secretarias, setSecretarias] = useState<any[]>([]);
@@ -73,22 +86,35 @@ export default function NewServidorPage() {
       await api.post("/newuser", {
         usrNome,
         usrEmail,
-        usrCpf,
+        usrCartao,
         usrCelular,
+        usrCpf,
+        usrMatricula,
+        usrSecretaria,
         usrNascimento,
+        usrTipCadastro,
         usrIdentidade,
         usrOrgEmissor,
         usrEstCivil,
         usrEndereco,
+        usrBairro,
         usrCidade,
         usrEstado,
         usrCep,
-        usrBairro,
-        usrMatricula,
-        usrSecretaria,
-        usrCargo,
+        usrFonResid,
+        usrTrabalho,
         usrAdmissao,
         usrSalLiquido,
+        usrSalBase,
+        usrSalBruto,
+        usrPassword,
+        usrTipContrato,
+        usrFonTrabalho,
+        usrCargo,
+        usrConjuge,
+        usrNasConjuge,
+        usrPai,
+        usrMae,
       });
 
       alert("Servidor cadastrado com sucesso!");
@@ -100,183 +126,213 @@ export default function NewServidorPage() {
 
   // ---------------- UI ----------------
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <Card className="rounded-2xl shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold">Novo Servidor</CardTitle>
-        </CardHeader>
+  <div className="flex flex-col gap-6 p-6 w-full min-h-screen bg-gray-50">
 
-        <CardContent>
-          <form onSubmit={handleCreateServidor} className="space-y-6">
-            <Tabs defaultValue="basicos" className="w-full">
-              <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full">
-                <TabsTrigger value="basicos">Básicos</TabsTrigger>
-                <TabsTrigger value="endereco">Endereço</TabsTrigger>
-                <TabsTrigger value="trabalho">Trabalho</TabsTrigger>
-                <TabsTrigger value="documentos">Documentos</TabsTrigger>
-                <TabsTrigger value="outros">Outros</TabsTrigger>
-              </TabsList>
+    <Card className="w-full min-h-[85vh] rounded-2xl shadow-sm border bg-white">
+      
+      <CardHeader>
+        <CardTitle className="text-2xl font-semibold text-purple-800">
+          Cadastro do Servidor(a)
+        </CardTitle>
+      </CardHeader>
 
-              {/* ---------------- BASIC TAB ---------------- */}
-              <TabsContent value="basicos" className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Nome</Label>
-                      <Input value={usrNome} onChange={(e) => setUsrNome(e.target.value)} required />
-                    </div>
+      <CardContent className="bg-gray-50 rounded-b-2xl">
+        <form onSubmit={handleCreateServidor} className="space-y-8">
 
-                    <div className="space-y-2">
-                      <Label>Email</Label>
-                      <Input value={usrEmail} onChange={(e) => setUsrEmail(e.target.value)} required />
-                    </div>
+          <Tabs defaultValue="basicos" className="w-full">
 
-                    <div className="space-y-2">
-                      <Label>CPF</Label>
-                      <Input value={usrCpf} onChange={(e) => setUsrCpf(e.target.value)} required />
-                    </div>
+            {/* TABS */}
+            <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full bg-white">
+              <TabsTrigger value="basicos">Básicos</TabsTrigger>
+              <TabsTrigger value="endereco">Endereço</TabsTrigger>
+              <TabsTrigger value="trabalho">Trabalho</TabsTrigger>
+            </TabsList>
 
-                    <div className="space-y-2">
-                      <Label>Celular</Label>
-                      <Input value={usrCelular} onChange={(e) => setUsrCelular(e.target.value)} required />
-                    </div>
-                  </div>
+            {/* ================= BASICOS ================= */}
+            <TabsContent value="basicos" className="pt-6">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Data de Nascimento</Label>
-                      <Input type="date" value={usrNascimento} onChange={(e) => setUsrNascimento(e.target.value)} />
-                    </div>
+                {/* DADOS PESSOAIS */}
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                    Dados Pessoais
+                  </h3>
 
-                    <div className="space-y-2">
-                      <Label>Identidade</Label>
-                      <Input value={usrIdentidade} onChange={(e) => setUsrIdentidade(e.target.value)} />
-                    </div>
+                  <Input placeholder="Nome completo" value={usrNome} onChange={(e) => setUsrNome(e.target.value)} />
+                  <Input placeholder="Email" value={usrEmail} onChange={(e) => setUsrEmail(e.target.value)} />
 
-                    <div className="space-y-2">
-                      <Label>Orgão Emissor</Label>
-                      <Input value={usrOrgEmissor} onChange={(e) => setUsrOrgEmissor(e.target.value)} />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Estado Civil</Label>
-                      <Input value={usrEstCivil} onChange={(e) => setUsrEstCivil(e.target.value)} />
-                    </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input placeholder="CPF" value={usrCpf} onChange={(e) => setUsrCpf(e.target.value)} />
+                    <Input placeholder="Celular" value={usrCelular} onChange={(e) => setUsrCelular(e.target.value)} />
                   </div>
                 </div>
-              </TabsContent>
 
-              {/* ---------------- ADDRESS TAB ---------------- */}
-              <TabsContent value="endereco" className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Endereço</Label>
-                      <Input value={usrEndereco} onChange={(e) => setUsrEndereco(e.target.value)} />
-                    </div>
+                {/* DOCUMENTOS */}
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                    Documentos
+                  </h3>
+                  <h3 className="text-sm font-normal text-gray-500 ">
+                    Data de Nascimento
+                  </h3>
+                  <Input type="date" value={usrNascimento} onChange={(e) => setUsrNascimento(e.target.value)} />
 
-                    <div className="space-y-2">
-                      <Label>Cidade</Label>
-                      <Input value={usrCidade} onChange={(e) => setUsrCidade(e.target.value)} />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>CEP</Label>
-                      <Input value={usrCep} onChange={(e) => setUsrCep(e.target.value)} />
-                    </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input placeholder="Identidade" value={usrIdentidade} onChange={(e) => setUsrIdentidade(e.target.value)} />
+                    <Input placeholder="Orgão Emissor" value={usrOrgEmissor} onChange={(e) => setUsrOrgEmissor(e.target.value)} />
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Bairro</Label>
-                      <Select onValueChange={(value) => setUsrBairro(value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione o bairro" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {bairros.map((b) => (
-                            <SelectItem key={b.baiId} value={String(b.baiId)}>
-                              {b.baiDescricao}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  <Input placeholder="Estado Civil" value={usrEstCivil} onChange={(e) => setUsrEstCivil(e.target.value)} />
+                </div>
 
-                    <div className="space-y-2">
-                      <Label>Estado</Label>
-                      <Input value={usrEstado} onChange={(e) => setUsrEstado(e.target.value)} />
-                    </div>
+                {/* FAMILIA */}
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                    Família
+                  </h3>
+
+                  <Input placeholder="Cônjuge" value={usrConjuge} onChange={(e) => setUsrConjuge(e.target.value)} />
+                  <h3 className="text-sm font-normal text-gray-500 ">
+                    Nascimento Cônjuge
+                  </h3>
+                  <Input type="date" value={usrNasConjuge} onChange={(e) => setUsrNasConjuge(e.target.value)} />
+
+                  <Input placeholder="Tipo de Cadastro" value={usrTipCadastro} onChange={(e) => setUsrTipCadastro(e.target.value)} />
+
+                  <div className="grid grid-cols-1 gap-3">
+                    <Input placeholder="Pai" value={usrPai} onChange={(e) => setUsrPai(e.target.value)} />
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    <Input placeholder="Mãe" value={usrMae} onChange={(e) => setUsrMae(e.target.value)} />
                   </div>
                 </div>
-              </TabsContent>
 
-              {/* ---------------- WORK TAB ---------------- */}
-              <TabsContent value="trabalho" className="pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Matrícula</Label>
-                      <Input value={usrMatricula} onChange={(e) => setUsrMatricula(e.target.value)} />
-                    </div>
+              </div>
+            </TabsContent>
 
-                    <div className="space-y-2">
-                      <Label>Secretaria</Label>
-                      <Select onValueChange={(value) => setUsrSecretaria(value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione a secretaria" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {secretarias.map((s) => (
-                            <SelectItem key={s.secId} value={String(s.secId)}>
-                              {s.secDescricao}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+            {/* ================= ENDERECO ================= */}
+            <TabsContent value="endereco" className="pt-6">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-                    <div className="space-y-2">
-                      <Label>Data de Admissão</Label>
-                      <Input type="date" value={usrAdmissao} onChange={(e) => setUsrAdmissao(e.target.value)} />
-                    </div>
-                  </div>
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                    Localização
+                  </h3>
 
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Cargo</Label>
-                      <Select onValueChange={(value) => setUsrCargo(value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione o cargo" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {cargos.map((c) => (
-                            <SelectItem key={c.crgId} value={String(c.crgId)}>
-                              {c.crgDescricao}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                  <Input placeholder="Endereço" value={usrEndereco} onChange={(e) => setUsrEndereco(e.target.value)} />
+                  <Input placeholder="Cidade" value={usrCidade} onChange={(e) => setUsrCidade(e.target.value)} />
 
-                    <div className="space-y-2">
-                      <Label>Salário Líquido</Label>
-                      <Input value={usrSalLiquido} onChange={(e) => setUsrSalLiquido(e.target.value)} />
-                    </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input placeholder="CEP" value={usrCep} onChange={(e) => setUsrCep(e.target.value)} />
+                    <Input placeholder="Estado" value={usrEstado} onChange={(e) => setUsrEstado(e.target.value)} />
                   </div>
                 </div>
-              </TabsContent>
-            </Tabs>
 
-            {/* ---------------- SUBMIT ---------------- */}
-            <div className="flex justify-end pt-6">
-              <Button type="submit" className="min-w-[200px]">
-                Salvar Servidor
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                    Bairro
+                  </h3>
+                  <Select onValueChange={(value) => setUsrBairro(value)}>
+                    <SelectTrigger className="w-full h-11">
+                      <SelectValue placeholder="Selecione o bairro" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-60">
+                      {bairros.map((b) => (
+                        <SelectItem key={b.baiId} value={String(b.baiId)}>
+                          {b.baiDescricao}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* ================= TRABALHO ================= */}
+            <TabsContent value="trabalho" className="pt-6">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                    Profissional
+                  </h3>
+
+                  <Input placeholder="Matrícula" value={usrMatricula} onChange={(e) => setUsrMatricula(e.target.value)} />
+
+                  <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                      Secretaria
+                    </h3>
+                    <Select onValueChange={(value) => setUsrSecretaria(value)}>
+                      <SelectTrigger className="w-full h-11 text-sm">
+                        <SelectValue placeholder="Selecione a secretaria" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60 overflow-y-auto">
+                        {secretarias.map((s) => (
+                          <SelectItem key={s.secId} value={String(s.secId)}>
+                            {s.secDescricao}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <h3 className="text-sm font-normal text-gray-500 ">
+                    Data Admissão
+                  </h3>
+                  <Input type="date" value={usrAdmissao} onChange={(e) => setUsrAdmissao(e.target.value)} />
+                </div>
+
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                    Cargo e Salários
+                  </h3>
+
+                  <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                      Cargo
+                    </h3>
+                    <Select onValueChange={(value) => setUsrCargo(value)}>
+                      <SelectTrigger className="w-full h-11 text-sm">
+                        <SelectValue placeholder="Selecione o cargo" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60 overflow-y-auto">
+                        {cargos.map((c) => (
+                          <SelectItem key={c.crgId} value={String(c.crgId)}>
+                            {c.crgDescricao}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Input placeholder="Salário Líquido" value={usrSalLiquido} onChange={(e) => setUsrSalLiquido(e.target.value)} />
+                  <Input placeholder="Salário Bruto" value={usrSalBruto} onChange={(e) => setUsrSalBruto(e.target.value)} />
+                  <Input placeholder="Salário Base" value={usrSalBase} onChange={(e) => setUsrSalBase(e.target.value)} />
+                </div>
+                <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                    Acesso
+                  </h3>
+
+                  <Input placeholder="Cartão Servidor" value={usrCartao} onChange={(e) => setUsrCartao(e.target.value)} />
+                  <Input type="password" placeholder="Senha" value={usrPassword} onChange={(e) => setUsrPassword(e.target.value)} />
+                </div>
+
+              </div>
+            </TabsContent>
+
+          </Tabs>
+
+          {/* BOTÃO */}
+          <div className="flex justify-end pt-6">
+            <Button type="submit" className="min-w-[220px] h-11 text-base">
+              Salvar Servidor
+            </Button>
+          </div>
+
+        </form>
+      </CardContent>
+    </Card>
+
+  </div>
+);
 }
