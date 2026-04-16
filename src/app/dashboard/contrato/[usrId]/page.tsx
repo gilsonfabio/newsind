@@ -182,9 +182,72 @@ export default function PdfCnvContrato() {
     ];
 
     clausulas.forEach((cl) => {
-      docDefinition.content.push({ text: cl.title, fontSize: 10, bold: true });
-      cl.content.forEach((c) => docDefinition.content.push(typeof c === "string" ? { text: c, fontSize: 10 } : c));
-    });
+  let i = 0;
+
+  while (i < cl.content.length) {
+    const item = cl.content[i];
+
+    // 🔥 Cláusula principal (primeira)
+    if (i === 0) {
+      docDefinition.content.push({
+        text: [
+          { text: cl.title, bold: true },
+          typeof item === "string" ? item : item.text || "",
+        ],
+        fontSize: 10,
+      });
+      i++;
+      continue;
+    }
+
+    // 🔥 Junta PARÁGRAFOS
+    if (
+      typeof item !== "string" &&
+      item.text &&
+      item.text.toLowerCase().includes("parágrafo")
+    ) {
+      const next = cl.content[i + 1];
+
+      docDefinition.content.push({
+        text: [
+          { text: item.text, bold: true },
+          typeof next === "string" ? next : next?.text || "",
+        ],
+        fontSize: 10,
+      });
+
+      i += 2;
+      continue;
+    }
+
+    // 🔥 Junta CLÁUSULAS internas (segunda, terceira, etc.)
+    if (
+      typeof item !== "string" &&
+      item.text &&
+      item.text.toLowerCase().includes("cláusula")
+    ) {
+      const next = cl.content[i + 1];
+
+      docDefinition.content.push({
+        text: [
+          { text: item.text, bold: true },
+          typeof next === "string" ? next : next?.text || "",
+        ],
+        fontSize: 10,
+      });
+
+      i += 2;
+      continue;
+    }
+
+    // 🔥 Conteúdo normal
+    docDefinition.content.push(
+      typeof item === "string" ? { text: item, fontSize: 10 } : item
+    );
+
+    i++;
+  }
+});
 
     // ========================== PARTE FINAL ==========================
     docDefinition.content.push(

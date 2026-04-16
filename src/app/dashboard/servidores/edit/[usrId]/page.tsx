@@ -148,7 +148,27 @@ export default function EditServidorPage() {
 
     api.get(`searchUser/${id}`).then((res) => {
       const u = res.data[0];
-      setForm((prev) => ({ ...prev, ...u }));
+
+      const formatDate = (date: string) => {
+        if (!date) return "";
+
+        const d = new Date(date);
+        const year = d.getUTCFullYear();
+        const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+        const day = String(d.getUTCDate()).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+      };
+
+      setForm((prev) => ({
+        ...prev,
+        ...u,
+        usrCargo: u.usrCargo?.toString() || "",
+        usrSecretaria: u.usrSecretaria?.toString() || "",
+        usrBairro: u.usrBairro?.toString() || "",
+        usrAdmissao: formatDate(u.usrAdmissao), 
+        usrNascimento: formatDate(u.usrNascimento)
+      }));
     });
 
     api.get("secretarias").then((r) => setSecretarias(r.data));
@@ -300,16 +320,20 @@ export default function EditServidorPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Bairro</Label>
-                      <Select value={form.usrBairro} onValueChange={(v) => handleSelect("usrBairro", v)}>
+                      <Select
+                        value={form.usrBairro?.toString()}
+                        onValueChange={(v) => handleSelect("usrBairro", v)}
+                      >
                         <SelectTrigger>
-                            <SelectValue placeholder="Selecione" />
+                          <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
+
                         <SelectContent>
-                            {bairros.map((b) => (
-                                <SelectItem key={b.baiId} value={b.baiId}>
-                                    {b.baiDescricao}
-                                </SelectItem>
-                            ))}
+                          {bairros.map((b) => (
+                            <SelectItem key={b.baiId} value={b.baiId.toString()}>
+                              {b.baiDescricao}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -342,13 +366,17 @@ export default function EditServidorPage() {
 
                     <div>
                       <Label>Secretaria</Label>
-                      <Select value={form.usrSecretaria} onValueChange={(v) => handleSelect("usrSecretaria", v)}>
+                      <Select
+                        value={form.usrSecretaria?.toString()}
+                        onValueChange={(v) => handleSelect("usrSecretaria", v)}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
+
                         <SelectContent>
                           {secretarias.map((s) => (
-                            <SelectItem key={s.secId} value={s.secId}>
+                            <SelectItem key={s.secId} value={s.secId.toString()}>
                               {s.secDescricao}
                             </SelectItem>
                           ))}
@@ -370,13 +398,16 @@ export default function EditServidorPage() {
                   <div className="space-y-4">
                     <div>
                       <Label>Cargo</Label>
-                      <Select value={form.usrCargo} onValueChange={(v) => handleSelect("usrCargo", v)}>
+                      <Select
+                        value={form.usrCargo?.toString()}
+                        onValueChange={(v) => handleSelect("usrCargo", v)}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione" />
                         </SelectTrigger>
                         <SelectContent>
                           {cargos.map((c) => (
-                            <SelectItem key={c.crgId} value={c.crgId}>
+                            <SelectItem key={c.crgId} value={c.crgId.toString()}>
                               {c.crgDescricao}
                             </SelectItem>
                           ))}
@@ -392,6 +423,10 @@ export default function EditServidorPage() {
                     <div>
                       <Label>Salário Bruto</Label>
                       <Input name="usrSalBruto" value={form.usrSalBruto} onChange={handleChange} />
+                    </div>
+                    <div>
+                      <Label>Salário Base</Label>
+                      <Input name="usrSalBase" value={form.usrSalBase} onChange={handleChange} />
                     </div>
                   </div>
                 </div>

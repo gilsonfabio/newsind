@@ -490,14 +490,14 @@ export default function ImpFichaPage() {
 
       {
         table: {
-          widths: ["50%"],
+          widths: ["60%"],
           body: [[{ text: "", border: [false, false, false, true] }]],
         },
       },
 
       {
         text: "Servidor",
-        alignment: "center",
+        alignment: "left",
         fontSize: 9,
         bold: true,
         margin: [0, 5, 0, 0],
