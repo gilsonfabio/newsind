@@ -86,7 +86,7 @@ export default function AtividadesPage() {
             Ramos de Atividade
           </CardTitle>
 
-          <Link href="/dashboard/atividades/new">
+          <Link href="/dashboard/atividades/nova">
             <Button className="flex items-center gap-2">
               <Plus size={16} />
               Nova Atividade

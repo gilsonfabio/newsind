@@ -53,7 +53,7 @@ export default function SidebarLayout({
   const menUser = [
     { name: "Tipos Contrato", to: "/dashboard/tipos", icon: Users },
     { name: "Servidores", to: "/dashboard/servidores", icon: Users },
-    { name: "Administradores", to: "/dashboard/admin", icon: UserCog },
+    { name: "Administradores", to: "/dashboard/administradores", icon: UserCog },
   ];
 
   const menAdmin = [
