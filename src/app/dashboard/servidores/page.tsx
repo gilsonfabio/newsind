@@ -34,6 +34,9 @@ export default function ServidoresPage() {
   const [search, setSearch] = useState("");
   const [cpfAnt, setCpfAnt] = useState("");
 
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // ---------------- LOAD DATA ----------------
   useEffect(() => {
     async function loadUsers() {
@@ -74,16 +77,21 @@ export default function ServidoresPage() {
 
   // ---------------- DELETE ----------------
   async function handleDelete(usrId: number) {
-    const confirmDelete = confirm("Deseja realmente excluir este servidor?");
-    if (!confirmDelete) return;
+    //const confirmDelete = confirm("Deseja realmente excluir este servidor?");
+    //if (!confirmDelete) return;
 
-    try {
-      await api.put(`/delServidor/${usrId}`);
-      setUsers((prev) => prev.filter((u) => u.usrId !== usrId));
-    } catch (error) {
-      console.error(error);
-      alert("Erro ao excluir servidor");
-    }
+    //try {
+    //  await api.put(`/delServidor/${usrId}`);
+    //  setUsers((prev) => prev.filter((u) => u.usrId !== usrId));
+    //} catch (error) {
+    //  console.error(error);
+    //  alert("Erro ao excluir servidor");
+    //}
+  }
+
+  function handleOpenModal(user: any) {
+    setSelectedUser(user);
+    setIsModalOpen(true);
   }
 
   // ---------------- UI ----------------
@@ -159,7 +167,14 @@ export default function ServidoresPage() {
                         className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                       >
                         <TableCell className="w-16 font-medium">{row.usrId}</TableCell>
-                        <TableCell>{row.usrNome}</TableCell>
+                        <TableCell>
+                          <button
+                            onClick={() => handleOpenModal(row)}
+                            className="text-blue-600 hover:underline font-medium"
+                          >
+                            {row.usrNome}
+                          </button>
+                        </TableCell>
                         <TableCell>{row.usrEmail}</TableCell>
                         <TableCell className="text-center">
                           <Link href={`/dashboard/filiacao/${row.usrId}`}><Baby size={16} /></Link>
@@ -196,6 +211,51 @@ export default function ServidoresPage() {
           </div>
         </CardContent>
       </Card>
+      {isModalOpen && selectedUser && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 w-full max-w-md shadow-xl">
+            <h2 className="text-lg font-semibold mb-4">
+              Ações - {selectedUser.usrNome}
+            </h2>
+
+            <div className="grid grid-cols-2 gap-3">
+
+              <Link href={`/dashboard/filiacao/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><Baby size={16}/> Filiação</Button>
+              </Link>
+              <Link href={`/dashboard/informacoes/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><Book size={16}/> Informações</Button>
+              </Link>
+              <Link href={`/dashboard/stacartao/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><CreditCard size={16}/> Status</Button>
+              </Link>
+              <Link href={`/dashboard/ficha/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><Printer size={16}/> Ficha</Button>
+              </Link>
+              <Link href={`/dashboard/contrato/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><Printer size={16}/> Contrato</Button>
+              </Link>
+              <Link href={`/dashboard/permissao/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><FileText size={16}/> Permissão</Button>
+              </Link>
+              <Link href={`/dashboard/servidores/edit/${selectedUser.usrId}`}>
+                <Button className="w-full flex gap-2"><Pencil size={16}/> Editar</Button>
+              </Link>
+              <Button
+                onClick={() => handleDelete(selectedUser.usrId)}
+                className="w-full flex gap-2 bg-red-500 hover:bg-red-600"
+              >
+                <Trash2 size={16}/> Excluir
+              </Button>
+            </div>
+            <div className="mt-6 text-right">
+              <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+                Fechar
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}                
     </div>
   );
 }
