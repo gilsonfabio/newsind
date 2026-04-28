@@ -10,8 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 
-// ---------------- TYPES ----------------
-
 type Venda = {
   cmpId: number;
   cmpQtdParcela: number;
@@ -22,16 +20,13 @@ type Venda = {
   cmpVlrCompra: number;
 };
 
-// ---------------- PAGE ----------------
-
 export default function PdfCmpEmisPage() {
   const searchParams = useSearchParams();
 
   const [vendas, setVendas] = useState<Venda[]>([]);
+  const [parcelas, setParcelas] = useState<any[]>([]);
   const [datInicio, setDatInicio] = useState("");
   const [datFinal, setDatFinal] = useState("");
-
-  // ---------------- LOAD DATA ----------------
 
   useEffect(() => {
     const dataInicio = searchParams.get("datInicio");
@@ -41,25 +36,20 @@ export default function PdfCmpEmisPage() {
 
     if (!dataInicio || !dataFinal) return;
 
-    setDatInicio(moment(dataInicio).utc().locale("pt-br").format("L"));
-    setDatFinal(moment(dataFinal).utc().locale("pt-br").format("L"));
+    setDatInicio(moment(dataInicio).format("L"));
+    setDatFinal(moment(dataFinal).format("L"));
 
     async function loadData() {
-      try {
-        const res = await api.get(
-          `/pdfCmpEmis/${dataInicio}/${dataFinal}/${convenio || 0}/${servidor || 0}`
-        );
+      const res = await api.get(
+        `/pdfCmpEmis/${dataInicio}/${dataFinal}/${convenio || 0}/${servidor || 0}`
+      );
 
-        setVendas(res.data);
-      } catch (error) {
-        console.error("Erro ao gerar relatório:", error);
-      }
+      setVendas(res.data.compras);
+      setParcelas(res.data.parcelas || []);
     }
 
     loadData();
   }, [searchParams]);
-
-  // ---------------- GERAR PDF ----------------
 
   async function gerarPdf() {
     const pdfMakeModule = await import("pdfmake/build/pdfmake");
@@ -68,79 +58,129 @@ export default function PdfCmpEmisPage() {
     const pdfMake = pdfMakeModule.default;
     (pdfMake as any).vfs = pdfFontsModule.default;
 
-    const reportTitle = [
-      {
-        text: `Relatório de Compras por Emissão: ${datInicio} até ${datFinal}`,
-        fontSize: 15,
-        bold: true,
-        margin: [15, 20, 0, 45],
-      },
-    ];
+    // 🔹 Agrupar parcelas
+    const parcelasPorCompra = parcelas.reduce((acc, parcela) => {
+      if (!acc[parcela.parIdCompra]) {
+        acc[parcela.parIdCompra] = [];
+      }
+      acc[parcela.parIdCompra].push(parcela);
+      return acc;
+    }, {} as Record<number, any[]>);
 
-    const dados = vendas.map((venda) => [
-      { text: venda.cmpId, fontSize: 7 },
-      { text: venda.cmpQtdParcela, fontSize: 7 },
-      { text: venda.usrMatricula, fontSize: 7 },
-      { text: venda.usrNome, fontSize: 7 },
-      { text: venda.cnvNomFantasia, fontSize: 7 },
-      {
-        text: moment(venda.cmpEmissao).utc().locale("pt-br").format("L"),
-        fontSize: 7,
-      },
-      {
-        text: Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(venda.cmpVlrCompra),
-        alignment: "right",
-        fontSize: 7,
-      },
-    ]);
+    const dados: any[] = [];
 
-    const total = vendas
-      .map((item) => item.cmpVlrCompra)
-      .reduce((prev, curr) => prev + curr, 0);
+    vendas.forEach((venda) => {
+      dados.push([
+        {
+          text: `Compra #${venda.cmpId} - ${venda.usrNome}`,
+          colSpan: 7,
+          bold: true,
+          fillColor: "#eeeeee",
+          margin: [5, 5, 0, 5],
+        },
+        {}, {}, {}, {}, {}, {},
+      ]);
+
+      dados.push([
+        { text: "Matrícula:", bold: true, fontSize: 7 },
+        { text: venda.usrMatricula, fontSize: 7 },
+        { text: "Convênio:", bold: true, fontSize: 7 },
+        { text: venda.cnvNomFantasia, fontSize: 7 },
+        { text: "Emissão:", bold: true, fontSize: 7 },
+        { text: moment(venda.cmpEmissao).format("L"), fontSize: 7 },
+        {
+          text: Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(venda.cmpVlrCompra),
+          alignment: "right",
+          bold: true,
+          fontSize: 7,
+        },
+      ]);
+
+      dados.push([
+        { text: "", colSpan: 2 },
+        {},
+        { text: "Parcela", bold: true, fontSize: 6 },
+        { text: "Vencimento", bold: true, fontSize: 6 },
+        { text: "Valor", bold: true, fontSize: 6 },
+        { text: "Status", bold: true, fontSize: 6 },
+        { text: "", fontSize: 6 },
+      ]);
+
+      const parcelasDaCompra = parcelasPorCompra[venda.cmpId] || [];
+
+      parcelasDaCompra.forEach((parcela: any) => {
+        dados.push([
+          { text: "", colSpan: 2 },
+          {},
+          { text: parcela.parNroParcela, fontSize: 6 },
+          { text: moment(parcela.parVctParcela).format("L"), fontSize: 6 },
+          {
+            text: Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            }).format(parcela.parVlrParcela),
+            alignment: "right",
+            fontSize: 6,
+          },
+          {
+            text: parcela.parStaParcela === "P" ? "PAGO" : "ABERTO",
+            fontSize: 6,
+          },
+          {},
+        ]);
+      });
+
+      dados.push([
+        { text: "", colSpan: 7, margin: [0, 5] },
+        {}, {}, {}, {}, {}, {},
+      ]);
+    });
+
+    const total = vendas.reduce((sum, v) => sum + v.cmpVlrCompra, 0);
 
     const docDefinition = {
       pageSize: "A4",
-      pageMargins: [15, 50, 15, 40],
-      header: reportTitle,
+      pageMargins: [20, 60, 20, 50],
+
+      header: {
+        text: `RELATÓRIO DE COMPRAS\nPeríodo: ${datInicio} até ${datFinal}`,
+        alignment: "center",
+        fontSize: 14,
+        bold: true,
+        margin: [0, 20, 0, 10],
+      },
+
       content: [
         {
           table: {
-            headerRows: 1,
-            widths: [20, 25, 50, 120, 110, 60, 60],
-            body: [
-              [
-                { text: "ID", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "PLANO", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "MATRICULA", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "NOME SERVIDOR(A)", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "CONVENIO", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "EMISSÃO", fontSize: 6, bold: true, fillColor: "#d9d9d9" },
-                { text: "VALOR", fontSize: 6, bold: true, fillColor: "#d9d9d9", alignment: "right" },
-              ],
-              ...dados,
-            ],
+            widths: ["*", "*", "*", "*", "*", "*", "*"],
+            body: dados,
           },
+          layout: "noBorders",
         },
       ],
+
       footer: (currentPage: number, pageCount: number) => ({
+        margin: [20, 10],
         columns: [
           {
             text:
-              "Total de Compras: " +
+              "Total Geral: " +
               Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
               }).format(total),
             alignment: "left",
-            margin: [10, 0, 0, 0],
+            fontSize: 9,
+            bold: true,
           },
           {
-            text: `Página ${currentPage} / ${pageCount}`,
+            text: `Página ${currentPage} de ${pageCount}`,
             alignment: "right",
-            margin: [0, 0, 20, 0],
+            fontSize: 8,
           },
         ],
       }),
@@ -149,22 +189,16 @@ export default function PdfCmpEmisPage() {
     pdfMake.createPdf(docDefinition as any).open();
   }
 
-  // ---------------- UI ----------------
-
   return (
     <div className="flex flex-1 items-center justify-center p-6">
       <Card className="rounded-2xl shadow-sm w-[420px]">
         <CardHeader>
           <CardTitle className="text-xl font-semibold">
-            Gerar Relatório de Compras por Emissão
+            Gerar Relatório de Compras
           </CardTitle>
         </CardHeader>
 
         <CardContent className="flex flex-col gap-6 items-center">
-          <p className="text-sm text-zinc-500 text-center">
-            Clique no botão abaixo para gerar o relatório de compras por emissão.
-          </p>
-
           <Button onClick={gerarPdf} className="flex items-center gap-2">
             <FileText size={16} />
             Gerar PDF

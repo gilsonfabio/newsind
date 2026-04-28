@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import {
   Tabs,
@@ -235,6 +236,23 @@ export default function NovoConvenioPage() {
                     <Input value={cnvQtdParc} onChange={(e) => setQtdParc(e.target.value)} />
                   </div>
 
+                  <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                      Ramo de Atividade
+                    </h3>
+                    <Select onValueChange={(value) => setAtividade(value)}>
+                      <SelectTrigger className="w-full h-11 text-sm">
+                        <SelectValue placeholder="Selecione a atividade" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60 overflow-y-auto">
+                        {atividades.map((s) => (
+                          <SelectItem key={s.atvId} value={String(s.atvId)}>
+                            {s.atvDescricao}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
               </TabsContent>
