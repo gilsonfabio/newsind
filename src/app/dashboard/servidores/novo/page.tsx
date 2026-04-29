@@ -56,6 +56,7 @@ export default function NewServidorPage() {
   const [secretarias, setSecretarias] = useState<any[]>([]);
   const [cargos, setCargos] = useState<any[]>([]);
   const [bairros, setBairros] = useState<any[]>([]);
+  const [tipos, setTipos] = useState<any[]>([]);
   const [parametros, setParametros] = useState([]);
   const [seqcartao, setSeqCartao] = useState('');
 
@@ -66,15 +67,17 @@ export default function NewServidorPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [sec, car, bai] = await Promise.all([
+        const [sec, car, bai, tip] = await Promise.all([
           api.get("/secretarias"),
           api.get("/cargos"),
           api.get("/bairros"),
+          api.get("/tipos"),
         ]);
 
         setSecretarias(sec.data);
         setCargos(car.data);
         setBairros(bai.data);
+        setTipos(tip.data);
 
         api.get(`parametros`).then(response => {
           setParametros(response.data);
@@ -329,6 +332,23 @@ export default function NewServidorPage() {
                   <Input placeholder="Salário Líquido" value={usrSalLiquido} onChange={(e) => setUsrSalLiquido(e.target.value)} />
                   <Input placeholder="Salário Bruto" value={usrSalBruto} onChange={(e) => setUsrSalBruto(e.target.value)} />
                   <Input placeholder="Salário Base" value={usrSalBase} onChange={(e) => setUsrSalBase(e.target.value)} />
+                  <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                      Tipo de Contrato
+                    </h3>
+                    <Select onValueChange={(value) => setUsrTipContrato(value)}>
+                      <SelectTrigger className="w-full h-11 text-sm">
+                        <SelectValue placeholder="Selecione tipo contrato" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60 overflow-y-auto">
+                        {tipos.map((s) => (
+                          <SelectItem key={s.idTip} value={String(s.idTip)}>
+                            {s.tipDescricao}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
                   <h3 className="text-sm font-semibold text-gray-500 uppercase">

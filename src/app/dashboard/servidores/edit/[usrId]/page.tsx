@@ -22,6 +22,11 @@ type Bairro = {
   baiDescricao: string;
 };
 
+type Tipo = {
+  idTip: string;
+  tipDescricao: string;
+};
+
 export type Secretaria = {
   secId: string;
   secDescricao: string;
@@ -131,8 +136,8 @@ export default function EditServidorPage() {
 
   const [secretarias, setSecretarias] = useState<Secretaria[]>([]);
   const [cargos, setCargos] = useState<Cargo[]>([]);
-  const [tipos, setTipos] = useState([]);
   const [bairros, setBairros] = useState<Bairro[]>([]);
+  const [tipos, setTipos] = useState<Tipo[]>([]);
   const [parametros, setParametros] = useState([]);
   const [seqcartao, setSeqCartao] = useState('');
 
@@ -392,6 +397,26 @@ export default function EditServidorPage() {
                         value={form.usrAdmissao}
                         onChange={handleChange}
                       />
+                    </div>
+                    <div className="border rounded-xl p-5 space-y-4 bg-white shadow-sm">
+                      <h3 className="text-sm font-semibold text-gray-500 uppercase">
+                        Tipo de Contrato
+                      </h3>
+                      <Select
+                        value={form.usrTipContrato?.toString()}
+                        onValueChange={(v) => handleSelect("usrTipContrato", v)}
+                      >
+                        <SelectTrigger className="w-full h-11 text-sm">
+                          <SelectValue placeholder="Selecione tipo contrato" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-60 overflow-y-auto">
+                          {tipos.map((t) => (
+                            <SelectItem key={t.idTip} value={String(t.idTip)}>
+                              {t.tipDescricao}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
