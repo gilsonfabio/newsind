@@ -5,7 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import moment from "moment";
-import "moment/locale/pt-br";
+
+moment.locale("pt-br");
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
