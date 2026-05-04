@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import moment from "moment";
-import "moment/locale/pt-br";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -192,7 +191,8 @@ export default function ImpFichaPage() {
                 fontSize: 9,
               },
               {
-                text: `Nascimento: ${moment(user.usrNascimento)
+                text: `Nascimento: ${moment
+                  .utc(user.usrNascimento)
                   .locale("pt-br")
                   .format("L")}`,
                 fontSize: 9,
@@ -211,9 +211,10 @@ export default function ImpFichaPage() {
               { text: `Estado Civil: ${user.usrEstCivil}`, fontSize: 9 },
               { text: `Conjuge: ${user.usrConjuge}`, fontSize: 9 },
               {
-                text: `Nasc Conjuge: ${moment(user.usrNasConjuge)
+                text: `Data Admissão: ${moment
+                  .utc(user.usrNasConjuge)
                   .locale("pt-br")
-                  .format("L")}`,
+                  .format("L")}`,  
                 fontSize: 9,
               },
             ],
@@ -331,9 +332,10 @@ export default function ImpFichaPage() {
             [
               { text: `Telefone Trabalho: ${user.usrFonTrabalho}`, fontSize: 9 },
               {
-                text: `Data Admissão: ${moment(user.usrAdmissao)
+                text: `Data Admissão: ${moment
+                  .utc(user.usrAdmissao)
                   .locale("pt-br")
-                  .format("L")}`,
+                  .format("L")}`,    
                 fontSize: 9,
               },
             ],
