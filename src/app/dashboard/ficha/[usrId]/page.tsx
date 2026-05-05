@@ -419,7 +419,7 @@ export default function ImpFichaPage() {
           body: [
             [
               {
-                text: "1. Anexar cópia dos seguintes documentos CPF, RG, Comprovante de endereço atualizado e Contracheque.",
+                text: "1. Anexar cópia dos seguintes documentos: CPF, RG, comprovante de endereço atualizado e contra cheque.",
                 fontSize: 9,
                 bold: true,
               },
@@ -434,7 +434,7 @@ export default function ImpFichaPage() {
           body: [
             [
               {
-                text: "2. Autorizo desconto em folha da contribuição sindical conforme estatuto do Sindicaldas.",
+                text: "2. Autorizo desconto em folha da contribuição sindical conforme estatuto do SINDICALDAS.",
                 fontSize: 9,
                 bold: true,
               },
@@ -449,7 +449,7 @@ export default function ImpFichaPage() {
           body: [
             [
               {
-                text: "3. Participam dos benefícios oferecidos pelo Sindicaldas os filiados que estejam em dia com suas contribuições.",
+                text: "3. Participam dos benefícios oferecidos pelo SINDICALDAS os filiados que estejam em dia com suas contribuições, e, em caso de desfiliação, perderá, automaticamente, todos os direitos e benefícios adquiridos na condição de filiado.",
                 fontSize: 9,
                 bold: true,
               },
