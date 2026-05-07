@@ -65,7 +65,7 @@ export type Servidor = {
   usrMatricula: string;
   usrCargo: string;
   usrSecretaria: string;
-  usrTipoContrato: string;
+  usrTipContrato: string;
 };
 
 // -------- FORM DE SERVIDOR --------
@@ -82,7 +82,7 @@ export type ServidorForm = {
   usrMatricula: string;
   usrCargo: string;
   usrSecretaria: string;
-  usrTipoContrato: string;
+  usrTipContrato: string;
 };
 
 // -------- RESPOSTA PADRÃO DA API --------
@@ -452,6 +452,10 @@ export default function EditServidorPage() {
                     <div>
                       <Label>Salário Base</Label>
                       <Input name="usrSalBase" value={form.usrSalBase} onChange={handleChange} />
+                    </div>
+                    <div>
+                      <Label>Fone Trabalho</Label>
+                      <Input name="usrFonTrabalho" value={form.usrFonTrabalho} onChange={handleChange} />
                     </div>
                   </div>
                 </div>
