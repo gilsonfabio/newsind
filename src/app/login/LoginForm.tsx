@@ -20,13 +20,17 @@ export default function LoginForm() {
     });
 
     if (result?.error) {
-      setErro("Email ou senha inválidos");
+      if (result.error === "RELOGIN_REQUIRED") {
+        setErro("Usuário atualizado! Faça login novamente.");
+      } else {
+        setErro("Email ou senha inválidos");
+      }
       return;
     }
-
+       
     window.location.href = "/dashboard";
   }
-
+     
   return (
     <div className="min-h-screen flex">
       {/* IMAGEM */}

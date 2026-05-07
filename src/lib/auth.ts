@@ -21,20 +21,20 @@ export const authOptions: NextAuthOptions = {
 
           const user = response.data;
 
+          if (user?.forceRelogin) {
+            throw new Error("RELOGIN_REQUIRED");
+        }
+
           if (!user) return null;
 
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            accessToken: user.accessToken,
-            refreshToken: user.refreshToken,
-          };
-        } catch (error) {
-          console.log("Erro no login:", error);
-          return null;
+          return user;
+
+        } catch (error: any) {
+          throw new Error(
+            error.response?.data?.message || "Erro ao autenticar"
+          );
         }
-      },
+      }
     }),
   ],
 
