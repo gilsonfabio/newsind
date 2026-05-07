@@ -102,10 +102,8 @@ export default function ImpFichaPage() {
   const filhosTabela = filhos.map((fil: Filho) => [
     { text: fil.filId, fontSize: 8 },
     { text: fil.filNome, fontSize: 8 },
-    {
-      text: moment(fil.filNascimento).locale("pt-br").format("L"),
-      fontSize: 8,
-    },
+    { text: moment.utc(fil.filNascimento).locale("pt-br").format("L"), fontSize: 8},
+
   ]);
 
   const docDefinition: TDocumentDefinitions = {
