@@ -211,7 +211,7 @@ export default function ImpFichaPage() {
               { text: `Estado Civil: ${user.usrEstCivil}`, fontSize: 9 },
               { text: `Conjuge: ${user.usrConjuge}`, fontSize: 9 },
               {
-                text: `Data Admissão: ${moment
+                text: `Nasc.Conjuge: ${moment
                   .utc(user.usrNasConjuge)
                   .locale("pt-br")
                   .format("L")}`,  

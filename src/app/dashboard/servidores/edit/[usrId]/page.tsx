@@ -167,7 +167,8 @@ export default function EditServidorPage() {
         usrSecretaria: u.usrSecretaria?.toString() || "",
         usrBairro: u.usrBairro?.toString() || "",
         usrAdmissao: formatDate(u.usrAdmissao), 
-        usrNascimento: formatDate(u.usrNascimento)
+        usrNascimento: formatDate(u.usrNascimento),
+        usrNasConjuge: formatDate(u.usrNasConjuge),
       }));
     });
 
@@ -292,6 +293,10 @@ export default function EditServidorPage() {
                     <div>
                       <Label>Cônjuge</Label>
                       <Input name="usrConjuge" value={form.usrConjuge} onChange={handleChange} />
+                    </div>
+                    <div>
+                      <Label>Nasc.Cônjuge</Label>
+                      <Input type="date" value={form.usrNasConjuge} onChange={handleChange} />
                     </div>
                   </div>
                 </div>
