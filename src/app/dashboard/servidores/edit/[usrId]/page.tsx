@@ -296,7 +296,7 @@ export default function EditServidorPage() {
                     </div>
                     <div>
                       <Label>Nasc.Cônjuge</Label>
-                      <Input type="date" value={form.usrNasConjuge} onChange={handleChange} />
+                      <Input type="date" name="usrNasConjuge" value={form.usrNasConjuge} onChange={handleChange} />
                     </div>
                   </div>
                 </div>
