@@ -155,7 +155,7 @@ export default function ImpFichaPage() {
             [
               { text: `Email: ${user.usrEmail}`, fontSize: 9 },
               {
-                text: `Data Cadastro: ${moment(user.usrDatCadastro)
+                text: `Data Cadastro: ${moment.utc(user.usrDatCadastro)
                   .locale("pt-br")
                   .format("L")}`,
                 fontSize: 9,
