@@ -121,7 +121,7 @@ export default function TaxasMensaisPage() {
 
       console.log("Data:", datVenctoFormatada);
 
-      const res = await api.post("/aceCmpCnv", {
+      const res = await api.put("/aceCmpCnv", {
          datVencto: datVenctoFormatada,
       });
 
