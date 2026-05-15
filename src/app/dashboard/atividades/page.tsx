@@ -92,6 +92,12 @@ export default function AtividadesPage() {
               Nova Atividade
             </Button>
           </Link>
+          <Link href="/dashboard/atvmensal">
+            <Button className="flex items-center gap-2">
+              <Plus size={16} />
+              Taxa Mensal
+            </Button>
+          </Link>
         </CardHeader>
 
         <CardContent className="space-y-4">
