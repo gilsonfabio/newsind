@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-import { Pencil, Trash2, FileText, Loader2 } from "lucide-react";
+import { Pencil, Trash2, FileText, Loader2, Search } from "lucide-react";
 
 // ---------------- TYPES ----------------
 
@@ -53,36 +53,36 @@ export default function VdaVctOrgaoPage() {
     }
 
     const data = `${ano}-${String(mes).padStart(2, "0")}-15`;
+
     setDatInicio(data);
   }, []);
 
-  // ---------------- CARREGA DADOS ----------------
+  // ---------------- BUSCAR DADOS ----------------
 
-  useEffect(() => {
+  async function handleBuscar() {
     if (!datInicio) return;
 
-    async function loadData() {
-      try {
-        setLoading(true);
+    try {
+      setLoading(true);
 
-        const response = await api.post("/totOrgao", {
-          datInicio,
-        });
+      const response = await api.post("/totOrgao", {
+        datInicio,
+      });
 
-        setDados(response.data);
-      } catch (error) {
-        console.error("Erro ao carregar órgãos:", error);
-      } finally {
-        setLoading(false);
-      }
+      setDados(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar órgãos:", error);
+    } finally {
+      setLoading(false);
     }
-
-    loadData();
-  }, [datInicio]);
+  }
 
   // ---------------- TOTALIZADOR ----------------
 
-  const total = dados.reduce((acc, item) => acc + item.orgTotVlrVenda, 0);
+  const total = dados.reduce(
+    (acc, item) => acc + item.orgTotVlrVenda,
+    0
+  );
 
   // ---------------- UI ----------------
 
@@ -99,6 +99,7 @@ export default function VdaVctOrgaoPage() {
 
           {/* FILTRO */}
           <div className="flex flex-wrap items-end gap-4">
+
             <Input
               type="date"
               value={datInicio}
@@ -106,10 +107,26 @@ export default function VdaVctOrgaoPage() {
               className="w-[200px]"
             />
 
+            {/* BOTÃO BUSCAR */}
+            <Button
+              onClick={handleBuscar}
+              disabled={loading}
+              className="flex gap-2"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin" size={16} />
+              ) : (
+                <Search size={16} />
+              )}
+
+              Buscar
+            </Button>
+
+            {/* PDF */}
             <Link
               href={{
                 pathname: "/dashboard/vdavctorgao/pdfvctorgao",
-                query: { datInicio: datInicio },
+                query: { datInicio },
               }}
             >
               <Button className="flex gap-2">
@@ -117,12 +134,16 @@ export default function VdaVctOrgaoPage() {
                 Gerar PDF
               </Button>
             </Link>
+
           </div>
 
           {/* TOTALIZADOR */}
           <div className="flex justify-end">
             <div className="bg-zinc-100 dark:bg-zinc-800 px-6 py-3 rounded-xl shadow-sm">
-              <div className="text-xs text-zinc-500">Total geral</div>
+              <div className="text-xs text-zinc-500">
+                Total geral
+              </div>
+
               <div className="text-lg font-semibold">
                 {Intl.NumberFormat("pt-BR", {
                   style: "currency",
@@ -142,8 +163,12 @@ export default function VdaVctOrgaoPage() {
                   <TableHead>Ano</TableHead>
                   <TableHead>Mês</TableHead>
                   <TableHead>Total de Vendas</TableHead>
-                  <TableHead className="text-right">Editar</TableHead>
-                  <TableHead className="text-right">Excluir</TableHead>
+                  <TableHead className="text-right">
+                    Editar
+                  </TableHead>
+                  <TableHead className="text-right">
+                    Excluir
+                  </TableHead>
                 </TableRow>
               </TableHeader>
             </Table>
@@ -157,9 +182,16 @@ export default function VdaVctOrgaoPage() {
                 {/* LOADING */}
                 {loading && (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12">
+                    <TableCell
+                      colSpan={7}
+                      className="text-center py-12"
+                    >
                       <div className="flex items-center justify-center gap-2 text-zinc-500">
-                        <Loader2 className="animate-spin" size={18} />
+                        <Loader2
+                          className="animate-spin"
+                          size={18}
+                        />
+
                         Carregando dados...
                       </div>
                     </TableCell>
@@ -169,7 +201,10 @@ export default function VdaVctOrgaoPage() {
                 {/* SEM DADOS */}
                 {!loading && dados.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-12 text-zinc-500">
+                    <TableCell
+                      colSpan={7}
+                      className="text-center py-12 text-zinc-500"
+                    >
                       Nenhum registro encontrado
                     </TableCell>
                   </TableRow>
@@ -186,9 +221,17 @@ export default function VdaVctOrgaoPage() {
                         {row.idTotOrg}
                       </TableCell>
 
-                      <TableCell>{row.orgDescricao}</TableCell>
-                      <TableCell>{row.orgTotAno}</TableCell>
-                      <TableCell>{row.orgTotMes}</TableCell>
+                      <TableCell>
+                        {row.orgDescricao}
+                      </TableCell>
+
+                      <TableCell>
+                        {row.orgTotAno}
+                      </TableCell>
+
+                      <TableCell>
+                        {row.orgTotMes}
+                      </TableCell>
 
                       <TableCell>
                         {Intl.NumberFormat("pt-BR", {
@@ -199,8 +242,13 @@ export default function VdaVctOrgaoPage() {
 
                       {/* EDITAR */}
                       <TableCell className="text-right">
-                        <Link href={`/dashboard/orgao/editar/${row.idTotOrg}`}>
-                          <Button variant="outline" size="icon">
+                        <Link
+                          href={`/dashboard/orgao/editar/${row.idTotOrg}`}
+                        >
+                          <Button
+                            variant="outline"
+                            size="icon"
+                          >
                             <Pencil size={16} />
                           </Button>
                         </Link>
@@ -208,7 +256,10 @@ export default function VdaVctOrgaoPage() {
 
                       {/* EXCLUIR */}
                       <TableCell className="text-right">
-                        <Button variant="destructive" size="icon">
+                        <Button
+                          variant="destructive"
+                          size="icon"
+                        >
                           <Trash2 size={16} />
                         </Button>
                       </TableCell>
