@@ -41,7 +41,7 @@ export default function PdfCmpVencPage() {
 
     if (!datVencto) return;
 
-    setDatPrint(moment(datVencto).utc().locale("pt-br").format("L"));
+    setDatPrint(moment(datVencto).utc().format("DD/MM/YYYY"));
 
     async function loadData() {
       try {
@@ -96,11 +96,11 @@ export default function PdfCmpVencPage() {
       { text: venda.usrNome, fontSize: 7 },
       { text: venda.cnvNomFantasia, fontSize: 7 },
       {
-        text: moment(venda.cmpEmissao).utc().locale("pt-br").format("L"),
+        text: moment(venda.cmpEmissao).utc().format("DD/MM/YYYY"),
         fontSize: 7,
       },
       {
-        text: moment(venda.parVctParcela).utc().locale("pt-br").format("L"),
+        text: moment(venda.parVctParcela).utc().format("DD/MM/YYYY"),
         fontSize: 7,
       },
       {

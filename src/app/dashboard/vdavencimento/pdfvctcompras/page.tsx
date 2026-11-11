@@ -44,7 +44,7 @@ export default function PdfCmpVencPage() {
 
   // ---------------- HELPERS ----------------
   const formatDate = (date: string) =>
-    moment(date).utc().locale("pt-br").format("L");
+    moment(date).utc().format("DD/MM/YYYY");
 
   const formatMoney = (value: number) =>
     Intl.NumberFormat("pt-BR", {
