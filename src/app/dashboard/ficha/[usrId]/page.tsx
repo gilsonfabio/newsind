@@ -102,7 +102,7 @@ export default function ImpFichaPage() {
   const filhosTabela = filhos.map((fil: Filho) => [
     { text: fil.filId, fontSize: 8 },
     { text: fil.filNome, fontSize: 8 },
-    { text: moment.utc(fil.filNascimento).locale("pt-br").format("L"), fontSize: 8},
+    { text: moment.utc(fil.filNascimento).locale("pt-br").format("DD/MM/YYYY"), fontSize: 8},
 
   ]);
 
@@ -157,7 +157,7 @@ export default function ImpFichaPage() {
               {
                 text: `Data Cadastro: ${moment.utc(user.usrDatCadastro)
                   .locale("pt-br")
-                  .format("L")}`,
+                  .format("DD/MM/YYYY")}`,
                 fontSize: 9,
               },
             ],
@@ -192,7 +192,7 @@ export default function ImpFichaPage() {
                 text: `Nascimento: ${moment
                   .utc(user.usrNascimento)
                   .locale("pt-br")
-                  .format("L")}`,
+                  .format("DD/MM/YYYY")}`,
                 fontSize: 9,
               },
             ],
@@ -212,7 +212,7 @@ export default function ImpFichaPage() {
                 text: `Nasc.Conjuge: ${moment
                   .utc(user.usrNasConjuge)
                   .locale("pt-br")
-                  .format("L")}`,  
+                  .format("DD/MM/YYYY")}`,  
                 fontSize: 9,
               },
             ],
@@ -333,7 +333,7 @@ export default function ImpFichaPage() {
                 text: `Data Admissão: ${moment
                   .utc(user.usrAdmissao)
                   .locale("pt-br")
-                  .format("L")}`,    
+                  .format("DD/MM/YYYY")}`,    
                 fontSize: 9,
               },
             ],
